@@ -2,7 +2,7 @@ import { SignedIn, SignedOut, useUser } from "@clerk/clerk-expo";
 import { Link } from "expo-router";
 import { Text, View } from "react-native";
 
-export default function Index() {
+export default function home() {
   const { user } = useUser();
 
   return (

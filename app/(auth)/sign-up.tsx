@@ -8,7 +8,7 @@ import React, { useState } from "react";
 import { Alert, Image, ScrollView, Text, View } from "react-native";
 import ReactNativeModal from "react-native-modal";
 
-// 1:54:05
+// Maybe implement a section for "confirm password"
 
 export default function signUp() {
   const { isLoaded, signUp, setActive } = useSignUp();
@@ -181,7 +181,7 @@ export default function signUp() {
           </View>
         </ReactNativeModal>
 
-        <ReactNativeModal isVisible={verification.state === "success"}>
+        <ReactNativeModal isVisible={showSuccessModal}>
           <View className="bg-white px-7 py-9 rounded-2xl min-h-[300px]">
             <Image
               source={images.check}
@@ -198,7 +198,10 @@ export default function signUp() {
 
             <CustomButton
               title={"Browse Home"}
-              onPress={() => router.replace("/(root)/(tabs)/home")}
+              onPress={() => {
+                setShowSuccessModal(false);
+                router.push("/(root)/(tabs)/home");
+              }}
               className="mt-5"
             />
           </View>
