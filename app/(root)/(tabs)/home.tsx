@@ -16,17 +16,38 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-// 3:14:45
-
 export default function home() {
   const { setUserLocation, setDestinationLocation } = useLocationStore();
   const { user } = useUser();
   const loading = true;
   const [hasPermissions, setHasPermission] = useState(false);
 
+  // useEffect(() => {
+  //   (async () => {
+  //     let { status } = await Location.requestForegroundPermissionsAsync();
+
+  //     if (status !== "granted") {
+  //       setHasPermission(false);
+  //       return;
+  //     }
+
+  //     let location = await Location.getCurrentPositionAsync({});
+
+  //     const address = await Location.reverseGeocodeAsync({
+  //       latitude: location.coords?.latitude!,
+  //       longitude: location.coords?.longitude!,
+  //     });
+
+  //     setUserLocation({
+  //       latitude: location.coords?.latitude,
+  //       longitude: location.coords?.longitude,
+  //       address: `${address[0].name}, ${address[0].region}`,
+  //     });
+  //   })();
+  // }, []);
+
   useEffect(() => {
-    (async () => {
+    const requestLocation = async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
 
       if (status !== "granted") {
@@ -34,7 +55,7 @@ export default function home() {
         return;
       }
 
-      let location = await Location.getCurrentPositionAsync({});
+      let location = await Location.getCurrentPositionAsync();
 
       const address = await Location.reverseGeocodeAsync({
         latitude: location.coords?.latitude!,
@@ -42,12 +63,17 @@ export default function home() {
       });
 
       setUserLocation({
-        latitude: location.coords?.latitude,
-        longitude: location.coords?.longitude,
+        // latitude: location.coords.latitude,
+        // longitude: location.coords.longitude,
+        latitude: 37.78825,
+        longitude: -122.4324,
         address: `${address[0].name}, ${address[0].region}`,
       });
-    })();
+    };
+
+    requestLocation();
   }, []);
+
   // TODO
   const handleSignout = () => {};
 
@@ -99,9 +125,7 @@ export default function home() {
           <>
             <View className="flex flex-row items-center justify-between my-5">
               <Text className="text-2xl capitalize font-JakartaExtraBold">
-                Welcome{", "}
-                {user?.firstName ||
-                  user?.emailAddresses[0].emailAddress.split("@")[0]}
+                Welcome
               </Text>
 
               <TouchableOpacity
@@ -126,6 +150,7 @@ export default function home() {
 
               <View className="flex flex-row items-center bg-transparent h-[300px]">
                 {/* render the map */}
+                {/* if this map is causing the issue, try using the other map package from google */}
                 <Map />
               </View>
             </>

@@ -1,8 +1,7 @@
-import { icons } from "@/constants";
 import { Tabs } from "expo-router";
-import React from "react";
-import { Dimensions, Image, ImageSourcePropType, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Image, ImageSourcePropType, View } from "react-native";
+
+import { icons } from "@/constants";
 
 const TabIcon = ({
   source,
@@ -13,7 +12,7 @@ const TabIcon = ({
 }) => (
   <View
     className={`flex flex-row justify-center items-center rounded-full ${
-      focused ? "bg-general-350" : ""
+      focused ? "bg-general-300" : ""
     }`}
   >
     <View
@@ -32,10 +31,6 @@ const TabIcon = ({
 );
 
 const _layout = () => {
-  const insets = useSafeAreaInsets();
-  const { width } = Dimensions.get("window");
-  const spacing = width > 400 ? 24 : 16;
-
   return (
     <Tabs
       initialRouteName="home"
@@ -46,15 +41,15 @@ const _layout = () => {
         tabBarStyle: {
           backgroundColor: "#333333",
           borderRadius: 50,
-          paddingBottom: insets.bottom,
+          paddingBottom: 0,
           overflow: "hidden",
-          marginHorizontal: spacing,
-          marginBottom: insets.bottom,
+          marginHorizontal: 20,
+          marginBottom: 20,
           height: 78,
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          flexDirection: "row-reverse",
+          flexDirection: "row",
           position: "absolute",
         },
       }}
@@ -65,40 +60,37 @@ const _layout = () => {
           title: "Home",
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} source={icons.home} />
+            <TabIcon source={icons.home} focused={focused} />
           ),
         }}
       />
-
       <Tabs.Screen
         name="rides"
         options={{
           title: "Rides",
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} source={icons.list} />
+            <TabIcon source={icons.list} focused={focused} />
           ),
         }}
       />
-
       <Tabs.Screen
         name="chat"
         options={{
           title: "Chat",
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} source={icons.chat} />
+            <TabIcon source={icons.chat} focused={focused} />
           ),
         }}
       />
-
       <Tabs.Screen
         name="profile"
         options={{
           title: "Profile",
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} source={icons.profile} />
+            <TabIcon source={icons.profile} focused={focused} />
           ),
         }}
       />

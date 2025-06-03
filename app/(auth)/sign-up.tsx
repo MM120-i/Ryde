@@ -45,6 +45,7 @@ export default function signUp() {
         state: "pending",
       });
     } catch (err: any) {
+      console.log(JSON.stringify(err, null, 2));
       Alert.alert("Error", err.errors[0].longMessage);
     }
   };
