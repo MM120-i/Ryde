@@ -1,9 +1,12 @@
 import GoogleTextInput from "@/components/GoogleTextInput";
+import Map from "@/components/Map";
 import RideCard from "@/components/RideCard";
 import { icons, images } from "@/constants";
 import { recentRides } from "@/constants/recentRides";
+import { useLocationStore } from "@/store/";
 import { useUser } from "@clerk/clerk-expo";
-import React from "react";
+import * as Location from "expo-location";
+import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
@@ -14,10 +17,37 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+// 3:14:45
+
 export default function home() {
+  const { setUserLocation, setDestinationLocation } = useLocationStore();
   const { user } = useUser();
   const loading = true;
+  const [hasPermissions, setHasPermission] = useState(false);
 
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+
+      if (status !== "granted") {
+        setHasPermission(false);
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+
+      const address = await Location.reverseGeocodeAsync({
+        latitude: location.coords?.latitude!,
+        longitude: location.coords?.longitude!,
+      });
+
+      setUserLocation({
+        latitude: location.coords?.latitude,
+        longitude: location.coords?.longitude,
+        address: `${address[0].name}, ${address[0].region}`,
+      });
+    })();
+  }, []);
   // TODO
   const handleSignout = () => {};
 
@@ -28,7 +58,18 @@ export default function home() {
     <SafeAreaView className="bg-general-500">
       <FlatList
         data={recentRides?.slice(0, 5)}
-        renderItem={({ item }) => <RideCard ride={item} />}
+        renderItem={({ item }) => (
+          <RideCard
+            ride={{
+              ...item,
+              destination_latitude: Number(item.destination_latitude),
+              destination_longitude: Number(item.destination_longitude),
+              origin_latitude: Number(item.origin_latitude),
+              origin_longitude: Number(item.origin_longitude),
+              fare_price: Number(item.fare_price),
+            }}
+          />
+        )}
         className="px-5"
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={{
@@ -85,8 +126,13 @@ export default function home() {
 
               <View className="flex flex-row items-center bg-transparent h-[300px]">
                 {/* render the map */}
+                <Map />
               </View>
             </>
+
+            <Text className="text-xl font-JakartaBold mt-5 mb-3">
+              Recent Rides
+            </Text>
           </>
         )}
       />

@@ -15,6 +15,7 @@ export const recentRides = [
     driver_id: 2,
     user_id: "1",
     created_at: "2024-08-12 05:19:20.620007",
+    user_email: "test@example.com",
     driver: {
       driver_id: "2",
       first_name: "David",
@@ -41,6 +42,7 @@ export const recentRides = [
     driver_id: 1,
     user_id: "1",
     created_at: "2024-08-12 06:12:17.683046",
+    user_email: "test@example.com",
     driver: {
       driver_id: "1",
       first_name: "James",
@@ -67,6 +69,7 @@ export const recentRides = [
     driver_id: 1,
     user_id: "1",
     created_at: "2024-08-12 08:49:01.809053",
+    user_email: "test@example.com",
     driver: {
       driver_id: "1",
       first_name: "James",
@@ -93,6 +96,7 @@ export const recentRides = [
     driver_id: 3,
     user_id: "1",
     created_at: "2024-08-12 18:43:54.297838",
+    user_email: "test@example.com",
     driver: {
       driver_id: "3",
       first_name: "Michael",
