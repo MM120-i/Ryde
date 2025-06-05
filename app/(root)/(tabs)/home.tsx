@@ -1,5 +1,5 @@
 import GoogleTextInput from "@/components/GoogleTextInput";
-import Map from "@/components/Map";
+// import Map from "@/components/Map";
 import RideCard from "@/components/RideCard";
 import { icons, images } from "@/constants";
 import { recentRides } from "@/constants/recentRides";
@@ -16,6 +16,7 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+
 export default function home() {
   const { setUserLocation, setDestinationLocation } = useLocationStore();
   const { user } = useUser();
@@ -150,8 +151,7 @@ export default function home() {
 
               <View className="flex flex-row items-center bg-transparent h-[300px]">
                 {/* render the map */}
-                {/* if this map is causing the issue, try using the other map package from google */}
-                <Map />
+                {/* <Map /> */}
               </View>
             </>
 
